@@ -22,12 +22,19 @@ const AuthLayout = () => {
       <div className="flex items-center justify-center p-8 bg-background">
         <Outlet />
       </div>
-      <div className="hidden md:flex flex-col justify-center p-12 bg-primary text-primary-foreground">
-        <h1 className="text-4xl font-bold mb-6 tracking-tight">Gérez les absences avec élégance.</h1>
-        <p className="text-xl text-primary-foreground/80 max-w-md">
-          SmartAbsence SaaS simplifie le suivi de la présence pour les établissements de formation avec une interface moderne et intuitive.
-        </p>
-      </div>
+      <div
+  className="hidden md:flex flex-col justify-center p-12  bg-cover bg-center "
+  style={{ backgroundImage: "url('/test.jpg')" }}
+>
+  <h1 className="text-4xl font-bold mb-6 tracking-tight">
+    Simplifiez le suivi des absences <br />
+    en toute efficacité.
+  </h1>
+
+  <p className="text-xl /80 max-w-md">
+    Une solution intelligente dédiée aux établissements de formation pour une gestion rapide, moderne et organisée.
+  </p>
+</div>
     </div>
   );
 };

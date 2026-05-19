@@ -48,26 +48,40 @@ const DashboardLayout = () => {
     { to: "/admin/modules", icon: FileText, label: "Modules" },
     { to: "/admin/seances", icon: Calendar, label: "Séances" },
     { to: "/admin/justifications", icon: FileText, label: "Justifications" },
+    { to: "/admin/profil", icon: Users, label: "Mon Profil" },
   ];
 
   const formateurLinks = [
     { to: "/formateur", icon: LayoutDashboard, label: "Tableau de bord" },
+    { to: "/formateur/groupes", icon: Users, label: "Mes Groupes" },
+    { to: "/formateur/modules", icon: BookOpen, label: "Mes Modules" },
     { to: "/formateur/seances", icon: Calendar, label: "Mes Séances" },
+    { to: "/formateur/profil", icon: Users, label: "Mon Profil" },
   ];
 
   const stagiaireLinks = [
     { to: "/stagiaire", icon: LayoutDashboard, label: "Tableau de bord" },
+    { to: "/stagiaire/seances", icon: Calendar, label: "Mes Séances" },
     { to: "/stagiaire/absences", icon: FileText, label: "Mes Absences" },
+    { to: "/stagiaire/justifications", icon: FileText, label: "Justifications" },
+    { to: "/stagiaire/profil", icon: Users, label: "Mon Profil" },
   ];
 
   const links = user.role === 'admin' ? adminLinks : user.role === 'formateur' ? formateurLinks : stagiaireLinks;
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-card border-r shadow-sm">
-      <div className="p-6 flex items-center gap-2">
-        <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center text-primary-foreground font-bold">SA</div>
-        <span className="text-xl font-bold tracking-tight">SmartAbsence</span>
-      </div>
+     <div className="p-6 flex items-center gap-2">
+  <div className="w-8 h-8 rounded-md flex items-center justify-center overflow-hidden">
+    <img
+      src="/logo.png"
+      alt="logo"
+      className="w-full h-full object-cover"
+    />
+  </div>
+
+  <span className="text-xl font-bold tracking-tight">CMC</span>
+</div>
       
       <div className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
         Menu Principal

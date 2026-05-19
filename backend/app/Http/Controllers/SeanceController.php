@@ -7,9 +7,15 @@ use Illuminate\Http\Request;
 
 class SeanceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Seance::with(['module', 'groupe', 'formateur'])->orderBy('date', 'desc')->get());
+        $query = Seance::with(['module', 'groupe', 'formateur']);
+        
+        if ($request->user()->role === 'formateur') {
+            $query->where('formateur_id', $request->user()->id);
+        }
+        
+        return response()->json($query->orderBy('date', 'desc')->get());
     }
 
     public function byFormateur($formateur_id)
@@ -33,13 +39,20 @@ class SeanceController extends Controller
         return response()->json($seance, 201);
     }
 
-    public function show(Seance $seance)
+    public function show(Seance $seance, Request $request)
     {
+        if ($request->user()->role === 'formateur' && $seance->formateur_id !== $request->user()->id) {
+            return response()->json(['message' => 'Non autorisé.'], 403);
+        }
         return response()->json($seance->load(['module', 'groupe', 'formateur', 'presences.stagiaire']));
     }
 
     public function update(Request $request, Seance $seance)
     {
+        if ($request->user()->role === 'formateur' && $seance->formateur_id !== $request->user()->id) {
+            return response()->json(['message' => 'Non autorisé.'], 403);
+        }
+
         $validated = $request->validate([
             'module_id' => 'sometimes|required|exists:modules,id',
             'groupe_id' => 'sometimes|required|exists:groupes,id',
@@ -55,8 +68,16 @@ class SeanceController extends Controller
         return response()->json($seance);
     }
 
-    public function destroy(Seance $seance)
+    public function destroy(Seance $seance, Request $request)
     {
+        if ($request->user()->role === 'formateur') {
+            if ($seance->formateur_id !== $request->user()->id) {
+                return response()->json(['message' => 'Non autorisé.'], 403);
+            }
+            if ($seance->is_validated) {
+                return response()->json(['message' => 'Impossible de supprimer une séance déjà validée.'], 403);
+            }
+        }
         $seance->delete();
         return response()->json(null, 204);
     }

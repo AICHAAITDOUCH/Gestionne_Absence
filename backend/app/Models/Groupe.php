@@ -21,4 +21,9 @@ class Groupe extends Model
     {
         return $this->hasMany(Seance::class);
     }
+
+    public function formateurs()
+    {
+        return $this->belongsToMany(User::class, 'groupe_user', 'groupe_id', 'user_id')->where('role', 'formateur');
+    }
 }

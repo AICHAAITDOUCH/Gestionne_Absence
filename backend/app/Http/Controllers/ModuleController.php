@@ -7,9 +7,19 @@ use Illuminate\Http\Request;
 
 class ModuleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Module::all());
+        $query = Module::with(['formateur', 'groupe']);
+        
+        if ($request->filled('formateur_id')) {
+            $query->where('formateur_id', $request->input('formateur_id'));
+        }
+        
+        if ($request->filled('groupe_id')) {
+            $query->where('groupe_id', $request->input('groupe_id'));
+        }
+        
+        return response()->json($query->get());
     }
 
     public function store(Request $request)
@@ -18,15 +28,17 @@ class ModuleController extends Controller
             'name' => 'required|string|max:255',
             'code' => 'required|string|max:255|unique:modules',
             'volume_horaire' => 'nullable|integer',
+            'formateur_id' => 'nullable|exists:users,id',
+            'groupe_id' => 'nullable|exists:groupes,id',
         ]);
 
         $module = Module::create($validated);
-        return response()->json($module, 201);
+        return response()->json($module->load(['formateur', 'groupe']), 201);
     }
 
     public function show(Module $module)
     {
-        return response()->json($module);
+        return response()->json($module->load(['formateur', 'groupe']));
     }
 
     public function update(Request $request, Module $module)
@@ -35,10 +47,12 @@ class ModuleController extends Controller
             'name' => 'sometimes|required|string|max:255',
             'code' => 'sometimes|required|string|max:255|unique:modules,code,' . $module->id,
             'volume_horaire' => 'nullable|integer',
+            'formateur_id' => 'nullable|exists:users,id',
+            'groupe_id' => 'nullable|exists:groupes,id',
         ]);
 
         $module->update($validated);
-        return response()->json($module);
+        return response()->json($module->load(['formateur', 'groupe']));
     }
 
     public function destroy(Module $module)

@@ -60,4 +60,49 @@ class FormateurController extends Controller
         $formateur->delete();
         return response()->json(null, 204);
     }
+
+    public function getGroupes($id)
+    {
+        $formateur = \App\Models\User::findOrFail($id);
+        $groupes = $formateur->groupes;
+        
+        if ($groupes->isEmpty()) {
+            $groupeIds = \App\Models\Seance::where('formateur_id', $id)
+                ->pluck('groupe_id')
+                ->unique();
+                
+            if ($groupeIds->isNotEmpty()) {
+                $groupes = \App\Models\Groupe::whereIn('id', $groupeIds)->get();
+            } else {
+                $groupes = \App\Models\Groupe::all();
+            }
+        }
+        
+        return response()->json($groupes);
+    }
+
+    public function myGroupes(Request $request)
+    {
+        $formateur = $request->user();
+        $groupes = $formateur->groupes()->withCount('stagiaires')->get();
+        if ($groupes->isEmpty()) {
+            $groupeIds = \App\Models\Seance::where('formateur_id', $formateur->id)->pluck('groupe_id')->unique();
+            $groupes = \App\Models\Groupe::whereIn('id', $groupeIds)->withCount('stagiaires')->get();
+        }
+        return response()->json($groupes);
+    }
+
+    public function myModules(Request $request)
+    {
+        $formateur = $request->user();
+        $modules = \App\Models\Module::where('formateur_id', $formateur->id)->with('groupe')->get();
+        return response()->json($modules);
+    }
+
+    public function mySeances(Request $request)
+    {
+        $formateur = $request->user();
+        $seances = \App\Models\Seance::where('formateur_id', $formateur->id)->with(['module', 'groupe'])->get();
+        return response()->json($seances);
+    }
 }

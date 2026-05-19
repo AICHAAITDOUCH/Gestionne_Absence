@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-form-hook'; // Wait, it's react-hook-form
+import { useState } from 'react';
 import { useForm as useHookForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -33,10 +32,14 @@ const Login = () => {
     >
       <Card className="glass border-none shadow-xl">
         <CardHeader className="space-y-2 text-center">
-          <div className="mx-auto w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-            <span className="text-primary font-bold text-xl">SA</span>
+         <div className="mx-auto w-40 h-40 rounded-full flex items-center justify-center mb-4 overflow-hidden">
+            <img
+              src="/logo.png"
+              alt="Logo"
+              className="w-25 h-25 object-contain"
+            />
           </div>
-          <CardTitle className="text-3xl font-bold tracking-tight">Bon retour</CardTitle>
+          <CardTitle className="text-3xl font-bold tracking-tight">CMC</CardTitle>
           <CardDescription>
             Entrez vos identifiants pour accéder à votre espace
           </CardDescription>

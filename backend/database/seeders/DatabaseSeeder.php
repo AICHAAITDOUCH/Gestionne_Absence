@@ -38,6 +38,9 @@ class DatabaseSeeder extends Seeder
             'role' => 'formateur',
         ]);
 
+        // Attach formateur to group
+        $formateur->groupes()->attach($groupe->id);
+
         // Create Stagiaire
         $stagiaire = User::create([
             'name' => 'Jane Smith',
@@ -52,6 +55,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Développement Front-end',
             'code' => 'M104',
             'volume_horaire' => 120,
+            'formateur_id' => $formateur->id,
+            'groupe_id' => $groupe->id,
         ]);
 
         // Create Seance

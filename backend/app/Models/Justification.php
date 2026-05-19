@@ -13,7 +13,8 @@ class Justification extends Model
         'presence_id',
         'document_path',
         'status',
-        'admin_remarque'
+        'admin_remarque',
+        'motif'
     ];
 
     public function presence()

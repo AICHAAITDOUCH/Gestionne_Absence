@@ -22,7 +22,7 @@ const AdminJustifications = () => {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['justifications'] })
   });
 
-  if (isLoading) return <div>Chargement...</div>;
+  if (isLoading) return <div className="p-8 text-center text-muted-foreground animate-pulse font-medium">Chargement des justifications...</div>;
 
   return (
     <div className="space-y-6">
@@ -59,12 +59,12 @@ const AdminJustifications = () => {
                       </a>
                     </td>
                     <td className="px-6 py-4">
-                      <span className={`px-2 py-1 rounded text-xs font-semibold ${
-                        justif.status === 'en_attente' ? 'bg-warning/10 text-warning border border-warning/20' : 
-                        justif.status === 'accepte' ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' : 
+                      <span className={`px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
+                        justif.status === 'en_attente' ? 'bg-amber-500/10 text-amber-600 border border-amber-500/20' : 
+                        justif.status === 'accepte' ? 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20' : 
                         'bg-destructive/10 text-destructive border border-destructive/20'
                       }`}>
-                        {justif.status}
+                        {justif.status === 'en_attente' ? 'En attente' : justif.status === 'accepte' ? 'Accepté' : 'Refusé'}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right flex justify-end space-x-2">

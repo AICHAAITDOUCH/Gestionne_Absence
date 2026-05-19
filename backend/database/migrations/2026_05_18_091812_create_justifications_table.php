@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('presence_id')->constrained()->cascadeOnDelete();
             $table->string('document_path');
+            $table->text('motif')->nullable();
             $table->enum('status', ['en_attente', 'accepte', 'refuse'])->default('en_attente');
             $table->text('admin_remarque')->nullable();
             $table->timestamps();

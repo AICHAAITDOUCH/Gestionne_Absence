@@ -56,6 +56,11 @@ class User extends Authenticatable
         return $this->belongsTo(Groupe::class);
     }
 
+    public function groupes()
+    {
+        return $this->belongsToMany(Groupe::class, 'groupe_user', 'user_id', 'groupe_id');
+    }
+
     public function seances()
     {
         return $this->hasMany(Seance::class, 'formateur_id');

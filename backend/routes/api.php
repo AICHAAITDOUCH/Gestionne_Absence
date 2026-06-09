@@ -12,6 +12,7 @@ use App\Http\Controllers\StagiaireController;
 use App\Http\Controllers\FormateurController;
 use App\Http\Controllers\JustificationController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/stagiaire/notifications/read', [NotificationController::class, 'markAllRead']);
     Route::post('/stagiaire/notifications/{id}/read', [NotificationController::class, 'markRead']);
     Route::delete('/stagiaire/notifications/{id}', [NotificationController::class, 'destroy']);
+
+    // Unified profile routes for Admin and Formateur
+    Route::get('/profile', [ProfileController::class, 'getProfile']);
+    Route::match(['put', 'post'], '/profile', [ProfileController::class, 'updateProfile']);
 
     Route::get('/formateur/groupes', [FormateurController::class, 'myGroupes']);
     Route::get('/formateur/modules', [FormateurController::class, 'myModules']);

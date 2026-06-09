@@ -15,6 +15,9 @@ import StagiaireAbsences from './pages/stagiaire/MesAbsences';
 import StagiaireJustifications from './pages/stagiaire/Justifications';
 import StagiaireProfil from './pages/stagiaire/ProfilStagiaire';
 
+import AdminProfil from './pages/admin/ProfilAdmin';
+import FormateurProfil from './pages/formateur/ProfilFormateur';
+
 import AdminStagiaires from './pages/admin/AdminStagiaires';
 import AdminFormateurs from './pages/admin/AdminFormateurs';
 import AdminGroupes from './pages/admin/AdminGroupes';
@@ -43,6 +46,8 @@ function App() {
             <Route path="modules" element={<AdminModules />} />
             <Route path="seances" element={<AdminSeances />} />
             <Route path="justifications" element={<AdminJustifications />} />
+            <Route path="profil" element={<AdminProfil />} />
+            <Route path="profile" element={<AdminProfil />} />
           </Route>
 
           {/* Formateur Routes */}
@@ -52,6 +57,8 @@ function App() {
             <Route path="modules" element={<MesModules />} />
             <Route path="seances" element={<MesSeances />} />
             <Route path="faire-appel/:seanceId" element={<FaireAppel />} />
+            <Route path="profil" element={<FormateurProfil />} />
+            <Route path="profile" element={<FormateurProfil />} />
           </Route>
 
           {/* Stagiaire Routes */}
